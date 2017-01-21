@@ -6,24 +6,25 @@ var helper = {
 
   // This function serves our purpose of running the query to geolocate.
   runQuery: function(location) {
-    var article  = "cats";
+    var article  = "dogs";
     var startYear = "19500101";
     var endYear = "20160101";
     var key = "3283107effc84af7965500f03014c457";
     var queryURL = "https://api.nytimes.com/svc/search/v2/articlesearch.json?q=" + article +"&begin_date="+ startYear +"&end_date="+endYear+ "&api-key=" + key;
-    return axios.get(queryURL).then(function(response) {
-      console.log(response.data.response.docs);
-    });
+    return axios.get(queryURL);
   },
-
-  // This function hits our own server to retrieve the record of query results
-  getHistory: function() {
-    return axios.get("/api");
+   // Returns a promise object we can .then() off inside our Parent component
+  getArticle: function(url) {
+    return axios.get(url);
   },
-
-  // This function posts new searches to our database.
-  postHistory: function(location) {
-    return axios.post("/api", { location: location });
+  // Also returns a promise object we can .then() off inside our Parent component
+  // This method takes in an argument for what to post to the database
+  deleteArticle: function(url) {
+    return axios.post(url);
+  },
+  createArticle: function(url, data){
+    console.log(url + data)
+    return axios.post(url, data);
   }
 };
 

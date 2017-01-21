@@ -13,9 +13,23 @@ var Articles = React.createClass({
         <div className="panel-body text-center">
 
           {/* Here we use a map function to loop through an array in JSX */}
-          {this.props.history.map(function(search, i) {
+          {this.props.results.map(function(search, i) {
             return (
-              <p key={i}>{search.location} - {search.date}</p>
+              <div key={i} className="panel panel-default">
+                <div className="panel-heading">
+                  <h3 className="panel-title text-center"> {search.title}</h3>
+                </div>
+                <div className="panel-body text-center">
+                  <div  className="row">
+                    <div  className="col-md-9">
+                      <p  className>{search.url}</p>
+                    </div>
+                    <div className="col-md-3">
+                      <button className="btn btn-primary" type="submit"> Save </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             );
           })}
         </div>
