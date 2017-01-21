@@ -5,8 +5,8 @@ var axios = require("axios");
 var helper = {
 
   // This function serves our purpose of running the query to geolocate.
-  runQuery: function(location) {
-    var article  = "dogs";
+  runQuery: function(term, start, end) {
+    var article  = term;
     var startYear = "19500101";
     var endYear = "20160101";
     var key = "3283107effc84af7965500f03014c457";

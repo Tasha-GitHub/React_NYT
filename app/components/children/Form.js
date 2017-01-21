@@ -29,23 +29,10 @@ var Form = React.createClass({
     this.setState({ 
       startYear: event.target.value });
   },
-  // When a user submits...
-  handleSubmit: function(event) {
-    // prevent the HTML from trying to submit a form if the user hits "Enter" instead of
-    // clicking the button
-    event.preventDefault();
-    // Set the parent to have the search term
-    this.props.setTerm(this.state.term), this.state.startYear, this.state.endYear;
-    this.setState({ 
-      term: "",
-      startYear: "",
-      endYear: ""
-     });
-  },
 
   queryAPI : function(){
     var self =this;
-    helpers.runQuery(this.state.term)
+    helpers.runQuery(this.state.term, this.state.startYear, this.state.endYear)
     .then(function(response){
       console.log(response.data.response.docs);
       // console.log(response.data.response.docs[0].headline.main);
