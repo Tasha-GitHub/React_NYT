@@ -23,7 +23,12 @@ var Saved = React.createClass({
     });
   },
 
-  deleteArticle: function(){
+  deleteArticle: function(id){
+    console.log(id);
+    helpers.deleteArticle("/api/saved/" + id).then(function(){
+      console.log("deleted");
+      location.reload();
+    });
 
   },
   render: function() {
@@ -48,7 +53,7 @@ var Saved = React.createClass({
                       <p  className>{search.url}</p>
                     </div>
                     <div className="col-md-3">
-                      <button className="btn btn-primary" onClick={self.deleteArticle.bind(null, i)} type="submit"> Remove Saved Article </button>
+                      <button className="btn btn-primary" id={search._id} onClick={self.deleteArticle.bind(null, search._id)} type="submit"> Remove Saved Article </button>
                     </div>
                   </div>
                 </div>

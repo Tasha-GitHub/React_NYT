@@ -77,6 +77,27 @@ app.post("/api/saved", function(req, res) {
     }
   });
 });
+
+// Route to see what user looks like WITH populating
+app.post("/api/saved/:noteId", function(req, res) {
+  // Prepare a query to find all users..
+  //var userId = req.body.userId;
+  var noteId = req.params.noteId;
+  console.log(noteId);
+  History.remove({ '_id': noteId })
+    // Now, execute the query
+    .exec(function(error, doc) {
+      // Send any errors to the browser
+      if (error) {
+        res.send(error);
+      }
+      // Or send the doc to the browser
+      else {
+        res.redirect("/");
+        console.log("deleted");
+      }
+    });
+});
 // -------------------------------------------------
 
 // Listener
