@@ -5,7 +5,7 @@ var logger = require("morgan");
 var mongoose = require("mongoose");
 
 // Require History Schema
-var History = require("./models/History");
+var History = require("./models/history");
 
 // Create Instance of Express
 var app = express();
@@ -45,12 +45,10 @@ app.get("/", function(req, res) {
 //API Routes ---------------------------------
 // This is the route we will send GET requests to retrieve our most recent search data.
 // We will call this route the moment our page gets rendered
-app.get("/api", function(req, res) {
+app.get("/api/saved", function(req, res) {
 
   // We will find all the records, sort it in descending order, then limit the records to 5
-  History.find({}).sort([
-    ["date", "descending"]
-  ]).limit(5).exec(function(err, doc) {
+  History.find({}).exec(function(err, doc) {
     if (err) {
       console.log(err);
     }
