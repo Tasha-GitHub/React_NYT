@@ -8,31 +8,10 @@ var Saved = React.createClass({
    getInitialState: function() {
     return {results: []};
   },
-  // Here we render the function
-  componentDidMount: function(){
-    var self =this;
-    helpers.getArticle("/api/saved")
-      .then(function(response) {
-        //console.log(response);
-        // Using a ternary operator we can set newClicks to the number of clicks in our response object
-        // If we don't have any clicks in our database, set newClicks to 0
-        console.log(response.data)
-        self.setState({
-          results: response.data
-        });
-    });
-  },
 
-  deleteArticle: function(id){
-    console.log(id);
-    helpers.deleteArticle("/api/saved/" + id).then(function(){
-      console.log("deleted");
-      location.reload();
-    });
-
-  },
   render: function() {
     var self = this;
+    //console.log(this.props.savedArticles)
     return (
       <div className="panel panel-default">
         <div className="panel-heading">
@@ -41,7 +20,7 @@ var Saved = React.createClass({
         <div className="panel-body text-center">
 
           {/* Here we use a map function to loop through an array in JSX */}
-          {this.state.results.map(function(search, i) {
+          {this.props.savedArticles.map(function(search, i) {
             return (
               <div key={i} ref={"article"+i} className="panel panel-default">
                 <div className="panel-heading">
@@ -53,7 +32,7 @@ var Saved = React.createClass({
                       <p  className>{search.url}</p>
                     </div>
                     <div className="col-md-3">
-                      <button className="btn btn-primary" id={search._id} onClick={self.deleteArticle.bind(null, search._id)} type="submit"> Remove Saved Article </button>
+                      <button className="btn btn-primary" id={search._id} onClick={self.props.deleteArticle.bind(null, i, search._id) } type="submit"> Remove Saved Article </button>
                     </div>
                   </div>
                 </div>

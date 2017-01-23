@@ -15,23 +15,62 @@ var Main = React.createClass({
   // Here we set a generic state associated with the number of clicks
   // Note how we added in this history state variable
   getInitialState: function() {
-    return { searchTerm: "", startYear: "", endYear: "", results: [], history:"results" };
+    return { searchTerm: "", startYear: "", endYear: "", results: [], savedArticles:[] };
   },
     setTerm: function(term, endyear, startyear) {
     this.setState({ searchTerm: term, endYear: endyear, startYear: startyear});
-  },  
-  //  On load display the number of clicks
-  componentDidMount: function() {
-    console.log("COMPONENT MOUNTED");
-
-    // The moment the page renders on page load, we will retrieve the previous click count.
-    // We will then utilize that click count to change the value of the click state.
+  },
+  componentWillMount: function(){
+    var self =this;
+    helpers.getArticle("/api/saved")
+      .then(function(response) {
+        //console.log(response);
+        //console.log(response.data)
+        self.setState({
+          savedArticles: response.data
+        });
+    });
   },
   setParent: function(results) {
 
     this.setState({
       results: results
     });
+  },
+  clickToSave: function(i, article){
+    var self = this;
+    var articleName = "article"+i;
+    //console.log(i);
+    //console.log(this.props.results[i]);
+    var data = article;
+    //console.log("----------------------")
+    console.log(article);
+    helpers.createArticle("/api/saved", data).then(function(response){
+      //console.log(response);
+      var newArray = self.state.savedArticles;
+      newArray.push(article);
+      // console.log(self.state.savedArticles)
+      //console.log("-------------------")
+      //console.log(newArray)
+      self.setState({
+        savedArticles: newArray 
+      });
+    });
+  },
+    // Here we render the function
+  deleteArticle: function(i, id){
+    var self = this;
+    //console.log(id);
+    helpers.deleteArticle("/api/saved/" + id).then(function(){
+      //console.log("deleted");
+      var savedArray = self.state.savedArticles;
+      savedArray.splice(i,1);
+      //console.log(savedArray);
+      self.setState({
+        savedArticles: savedArray
+      })
+    });
+
   },
   // Here we render the function
   render: function() {
@@ -51,12 +90,12 @@ var Main = React.createClass({
           </div>
         <div className="row">
           <div className="col-md-12">
-            <Articles results={this.state.results} />
+            <Articles results={this.state.results} clickFunction={this.clickToSave} />
           </div>
         </div>
         <div className="row">
           <div className="col-md-12">
-            <Saved address={this.state.history} />
+            <Saved savedArticles={this.state.savedArticles} deleteArticle={this.deleteArticle} />
           </div>
         </div>
 

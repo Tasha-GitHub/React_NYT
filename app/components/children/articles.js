@@ -4,15 +4,6 @@ var React = require("react");
 var helpers = require("../utils/helpers");
 // This is the History component. It will be used to show a log of  recent searches.
 var Articles = React.createClass({
-  saveArticle: function(i){
-    var articleName = "article"+i;
-    console.log(i);
-    console.log(this.props.results[i]);
-    var data = this.props.results[i];
-    helpers.createArticle("/api/saved", data).then(function(response){
-      console.log(response);
-    });
-  },
   // Here we describe this component's render method
   render: function() {
     var self = this;
@@ -36,7 +27,7 @@ var Articles = React.createClass({
                       <p  className>{search.url}</p>
                     </div>
                     <div className="col-md-3">
-                      <button className="btn btn-primary" onClick={self.saveArticle.bind(null, i)} type="submit"> Save </button>
+                      <button className="btn btn-primary" onClick={self.props.clickFunction.bind(null, i, self.props.results[i])} type="submit"> Save </button>
                     </div>
                   </div>
                 </div>

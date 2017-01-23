@@ -44,10 +44,9 @@ app.get("/", function(req, res) {
 // -------------------------------------------------
 //API Routes ---------------------------------
 // This is the route we will send GET requests to retrieve our most recent search data.
-// We will call this route the moment our page gets rendered
 app.get("/api/saved", function(req, res) {
 
-  // We will find all the records, sort it in descending order, then limit the records to 5
+  // We will find all the records
   History.find({}).exec(function(err, doc) {
     if (err) {
       console.log(err);
@@ -73,7 +72,7 @@ app.post("/api/saved", function(req, res) {
       console.log(err);
     }
     else {
-      res.send("Saved Search");
+      res.redirect("saved");
     }
   });
 });
@@ -94,7 +93,7 @@ app.post("/api/saved/:noteId", function(req, res) {
       // Or send the doc to the browser
       else {
         res.redirect("/");
-        console.log("deleted");
+        //console.log("deleted");
       }
     });
 });
