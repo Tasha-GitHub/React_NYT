@@ -31,14 +31,10 @@ var Form = React.createClass({
   },
 
   queryAPI : function(){
+    //queries API and saves results to an array (will be an array of objects)
     var self =this;
     helpers.runQuery(this.state.term, this.state.startYear, this.state.endYear)
     .then(function(response){
-      console.log(response.data.response.docs);
-      // console.log(response.data.response.docs[0].headline.main);
-      // console.log(response.data.response.docs[0].pub_date);
-      // console.log(response.data.response.docs.length)
-
       var searchResults = [];
       for(var i = 0; i < response.data.response.docs.length; i++){
         var info = {
@@ -49,10 +45,10 @@ var Form = React.createClass({
         }
         searchResults.push(info);
       }
-      console.log(searchResults)
       self.setState({
         results: searchResults
       });
+      //updates the parents state
       self.props.setParent(searchResults);
     });
   },

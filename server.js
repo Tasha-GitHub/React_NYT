@@ -23,7 +23,7 @@ app.use(express.static("./public"));
 
 // -------------------------------------------------
 
-// MongoDB Configuration configuration (Change this URL to your own DB)
+// MongoDB Configuration configuration
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/react_nyt");
 var db = mongoose.connection;
 
@@ -37,7 +37,6 @@ db.once("open", function() {
 
 // -------------------------------------------------
 //HTML Routes ---------------------------------
-// Main "/" Route. This will redirect the user to our rendered React application
 app.get("/", function(req, res) {
   res.sendFile(__dirname + "/public/index.html");
 });
@@ -57,7 +56,7 @@ app.get("/api/saved", function(req, res) {
   });
 });
 
-// This is the route we will send POST requests to save each search.
+// This is the route we will send POST requests to save each article.
 app.post("/api/saved", function(req, res) {
   console.log(req.body);
 
@@ -77,10 +76,8 @@ app.post("/api/saved", function(req, res) {
   });
 });
 
-// Route to see what user looks like WITH populating
+//delete route
 app.post("/api/saved/:noteId", function(req, res) {
-  // Prepare a query to find all users..
-  //var userId = req.body.userId;
   var noteId = req.params.noteId;
   console.log(noteId);
   History.remove({ '_id': noteId })
@@ -93,10 +90,10 @@ app.post("/api/saved/:noteId", function(req, res) {
       // Or send the doc to the browser
       else {
         res.redirect("/");
-        //console.log("deleted");
       }
     });
 });
+
 // -------------------------------------------------
 
 // Listener

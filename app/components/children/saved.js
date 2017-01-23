@@ -3,7 +3,6 @@ var React = require("react");
 // Helper for making AJAX requests to our API
 var helpers = require("../utils/helpers");
 
-// Creating the Results component
 var Saved = React.createClass({
    getInitialState: function() {
     return {results: []};
@@ -11,7 +10,6 @@ var Saved = React.createClass({
 
   render: function() {
     var self = this;
-    //console.log(this.props.savedArticles)
     return (
       <div className="panel panel-default">
         <div className="panel-heading">

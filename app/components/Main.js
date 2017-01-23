@@ -12,67 +12,57 @@ var helpers = require("./utils/helpers");
 // Creating the Main component
 var Main = React.createClass({
 
-  // Here we set a generic state associated with the number of clicks
-  // Note how we added in this history state variable
+  // Here we set a generic state
   getInitialState: function() {
     return { searchTerm: "", startYear: "", endYear: "", results: [], savedArticles:[] };
   },
-    setTerm: function(term, endyear, startyear) {
+  setTerm: function(term, endyear, startyear) {
+    //will update the terms based on user input into the form
     this.setState({ searchTerm: term, endYear: endyear, startYear: startyear});
   },
   componentWillMount: function(){
+    //retrieves all currently saved articles
     var self =this;
     helpers.getArticle("/api/saved")
       .then(function(response) {
-        //console.log(response);
-        //console.log(response.data)
         self.setState({
           savedArticles: response.data
         });
     });
   },
   setParent: function(results) {
-
+    //function that will update results from searching different articles
     this.setState({
       results: results
     });
   },
   clickToSave: function(i, article){
+    //when a user clicks on a article to save it, it will update the state of main
     var self = this;
     var articleName = "article"+i;
-    //console.log(i);
-    //console.log(this.props.results[i]);
     var data = article;
-    //console.log("----------------------")
     console.log(article);
     helpers.createArticle("/api/saved", data).then(function(response){
-      //console.log(response);
       var newArray = self.state.savedArticles;
       newArray.push(article);
-      // console.log(self.state.savedArticles)
-      //console.log("-------------------")
-      //console.log(newArray)
       self.setState({
         savedArticles: newArray 
       });
     });
   },
-    // Here we render the function
   deleteArticle: function(i, id){
+    //when a user deletes a saved article from the DB
     var self = this;
-    //console.log(id);
     helpers.deleteArticle("/api/saved/" + id).then(function(){
-      //console.log("deleted");
       var savedArray = self.state.savedArticles;
       savedArray.splice(i,1);
-      //console.log(savedArray);
       self.setState({
         savedArticles: savedArray
       })
     });
 
   },
-  // Here we render the function
+  // Here we render the page
   render: function() {
     return (
       <div className="container">

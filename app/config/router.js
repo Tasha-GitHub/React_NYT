@@ -32,11 +32,11 @@ module.exports = (
   <Router history={hashHistory}>
     <Route path="/" component={Main}>
 
-      {/* If user selects Info or Chat show the appropriate component */}
+      {/* If user selects articles or saved show the appropriate component */}
       <Route path="articles" component={Articles} />
       <Route path="saved" component={Saved} />
 
-      {/* If user selects any other path... we get the Info Route */}
+      {/* If user selects any other path... we get the articles Route */}
       <IndexRoute component={Articles} />
 
     </Route>
