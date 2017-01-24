@@ -67,10 +67,10 @@ var Main = React.createClass({
     return (
       <div className="container">
         <div className="row">
-          <div className="jumbotron">
-            <h2 className="text-center">Article Finder!</h2>
-            <p className="text-center">
-            </p>
+          <div className="banner">
+              <div className="jumbotron col-md-12">
+                <h1>The New York Times Article Finder!</h1>
+              </div>
           </div>
         </div>
           <div className="row">
